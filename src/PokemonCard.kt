@@ -1,5 +1,4 @@
-// Class that represents a Pokemon card.
-// Blueprint for creating Pokemon card objects
+// Describes one Pokemon card
 
 class PokemonCard(
     val number: Int,
