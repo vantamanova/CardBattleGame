@@ -1,7 +1,10 @@
 fun main() {
     val pokemonCollection = PokemonCollection()
 
-    for (pokemon in pokemonCollection.pokemonCards) {
+    val deck = createDeck(pokemonCollection)
+    shuffleDeck(deck)
+
+    for (pokemon in deck) {
         println("#${pokemon.number.toString().padStart(3, '0')} ${pokemon.name}, HP: ${pokemon.hp}, Type: ${pokemon.type}")
     }
 }
