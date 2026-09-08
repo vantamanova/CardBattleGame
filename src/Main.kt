@@ -16,29 +16,25 @@ fun main() {
     dealCards(deck, players)
 
     // Choose starting player
-    val startingPlayer = chooseStartingPlayer(players)
+    var startingPlayer = chooseStartingPlayer(players)
     println("${startingPlayer.name} will play first!")
 
     // The order of players
-    val turnOrder = game.getTurnOrder(players, startingPlayer)
+    var turnOrder = game.getTurnOrder(players, startingPlayer)
 
-    // Play turn
-    game.playTurn(turnOrder)
+    // keep playing till first player's hand is not empty
+    while (players[0].hand.isNotEmpty()) {
+        // Play turn
+        game.playTurn(turnOrder)
 
-    // Check Played cards
-    println("\nPlayed cards:")
-    for ((player, card) in game.playedCards) {
-        println("${player.name} played ${card.name} - ${card.type} - HP: ${card.hp}")
+        // Determine the winner
+        val turnWinner = game.determineTurnWinner()
+        println("\n${turnWinner.name} wins the turn! Score: ${turnWinner.score}")
+
+        // Next first player is this trick winner
+        startingPlayer = turnWinner
+
+        // Next trick new order
+        turnOrder = game.getTurnOrder(players, startingPlayer)
     }
-
-    // Determine the winner
-    val turnWinner = game.determineTurnWinner()
-    println("\n${turnWinner.name} wins the turn!")
-
-    //
-    val nextTurnOrder = game.getTurnOrder(players, turnWinner)
-    game.playTurn(nextTurnOrder)
-
-    val secondTurnWinner = game.determineTurnWinner()
-    println("\n${secondTurnWinner.name} wins the turn!")
 }

@@ -73,24 +73,42 @@ class Game {
 
         // compare cards
         for ((player, card) in playedCards) {
-            // don't compare first cart to itself
+            // don't compare first card to itself
             if (card == firstCard) {
                 continue
             }
 
-            // compare 2 cards
-            if (isStrongAgainst(card.type, winningCard.type)) {
+            // Check if the new card is strong against the lead type
+            val cardBeatsLead = isStrongAgainst(card.type, leadType)
+
+            // Check if the current winning card is strong against the lead type
+            val winningCardBeatsLead = isStrongAgainst(winningCard.type, leadType)
+
+            // A card that is strong against the lead type beats a lead-type card
+            if (cardBeatsLead && !winningCardBeatsLead) {
                 winningPlayer = player
                 winningCard = card
             }
-            else if (isStrongAgainst(winningCard.type, card.type)) {
-                continue
+
+            // If both cards are strong against the lead type, higher HP wins
+            else if (cardBeatsLead && card.hp > winningCard.hp) {
+                winningPlayer = player
+                winningCard = card
             }
-            else if (card.hp > winningCard.hp) {
+
+            // If neither card beats the lead type, only lead-type cards can compete by HP
+            else if (
+                !cardBeatsLead &&
+                !winningCardBeatsLead &&
+                card.type == leadType &&
+                winningCard.type == leadType &&
+                card.hp > winningCard.hp
+            ) {
                 winningPlayer = player
                 winningCard = card
             }
         }
+
         // Increase winner's score
         winningPlayer.score += 10
         return winningPlayer
