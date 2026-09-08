@@ -4,6 +4,8 @@ fun main() {
         listOf("Vera", "Daniil", "Sofia")
     )
 
+    val game = Game()
+
     // Create collection and deck
     val pokemonCollection = loadPokemon()
     val deck = createDeck(pokemonCollection)
@@ -12,18 +14,14 @@ fun main() {
     // deal cards
     dealCards(deck, players)
 
-    // Just to check what is going on
-    for (player in players) {
-        println("\n${player.name}'s hand:")
+    // Choose starting player
+    val startingPlayer = chooseStartingPlayer(players)
+    println("${startingPlayer.name} will play first!")
 
-        for (pokemon in player.hand) {
-            println(
-                "#${pokemon.number.toString().padStart(3, '0')} " +
-                        "${pokemon.name}, HP: ${pokemon.hp}, Type: ${pokemon.type}"
-            )
-        }
-    }
+    // The order of players
+    val turnOrder = game.getTurnOrder(players, startingPlayer)
 
-    // Another temporary check
-    println("\nCards remaining in deck: ${deck.size}")
+    // Check for choosing card
+    val chosenCard = game.chooseCard(turnOrder[0])
+    println("You chose: ${chosenCard.name}")
 }

@@ -17,3 +17,7 @@ fun createPlayers(playerNames: List<String>): List<Player> {
         )
     }
 }
+
+fun chooseStartingPlayer(players: List<Player>): Player {
+    return players.random()
+}
