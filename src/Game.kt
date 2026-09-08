@@ -59,4 +59,61 @@ class Game {
             playedCards[player] = chosenCard
         }
     }
+
+    fun determineTurnWinner(): Player {
+        // first played card
+        val firstCard = playedCards.values.first()
+
+        // get the lead type from that first card
+        val leadType = firstCard.type
+
+        // temporary winner
+        var winningPlayer = playedCards.keys.first()
+        var winningCard = firstCard
+
+        // compare cards
+        for ((player, card) in playedCards) {
+            // don't compare first cart to itself
+            if (card == firstCard) {
+                continue
+            }
+
+            // compare 2 cards
+            if (isStrongAgainst(card.type, winningCard.type)) {
+                winningPlayer = player
+                winningCard = card
+            }
+            else if (isStrongAgainst(winningCard.type, card.type)) {
+                continue
+            }
+            else if (card.hp > winningCard.hp) {
+                winningPlayer = player
+                winningCard = card
+            }
+        }
+        // Increase winner's score
+        winningPlayer.score += 10
+        return winningPlayer
+    }
+
+    fun isStrongAgainst(attackingType: String, defendingType: String): Boolean {
+        // compare types
+        val strengths = mapOf(
+            "Electric" to listOf("Water"),
+            "Water" to listOf("Fire", "Rock", "Ground"),
+            "Fire" to listOf("Grass", "Bug"),
+            "Grass" to listOf("Water", "Ground", "Rock"),
+            "Ground" to listOf("Electric", "Fire", "Poison", "Rock"),
+            "Rock" to listOf("Fire", "Bug"),
+            "Fighting" to listOf("Normal", "Rock"),
+            "Psychic" to listOf("Fighting", "Poison"),
+            "Ghost" to listOf("Psychic", "Ghost"),
+            "Poison" to listOf("Grass", "Fairy"),
+            "Bug" to listOf("Grass", "Psychic"),
+            "Fairy" to listOf("Fighting")
+        )
+
+        // return T or F
+        return defendingType in (strengths[attackingType] ?: emptyList())
+    }
 }

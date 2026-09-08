@@ -4,6 +4,7 @@ fun main() {
         listOf("Vera", "Daniil", "Sofia")
     )
 
+    // Create Game
     val game = Game()
 
     // Create collection and deck
@@ -29,4 +30,15 @@ fun main() {
     for ((player, card) in game.playedCards) {
         println("${player.name} played ${card.name} - ${card.type} - HP: ${card.hp}")
     }
+
+    // Determine the winner
+    val turnWinner = game.determineTurnWinner()
+    println("\n${turnWinner.name} wins the turn!")
+
+    //
+    val nextTurnOrder = game.getTurnOrder(players, turnWinner)
+    game.playTurn(nextTurnOrder)
+
+    val secondTurnWinner = game.determineTurnWinner()
+    println("\n${secondTurnWinner.name} wins the turn!")
 }
