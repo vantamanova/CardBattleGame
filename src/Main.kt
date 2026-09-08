@@ -21,7 +21,12 @@ fun main() {
     // The order of players
     val turnOrder = game.getTurnOrder(players, startingPlayer)
 
-    // Check for choosing card
-    val chosenCard = game.chooseCard(turnOrder[0])
-    println("You chose: ${chosenCard.name}")
+    // Play turn
+    game.playTurn(turnOrder)
+
+    // Check Played cards
+    println("\nPlayed cards:")
+    for ((player, card) in game.playedCards) {
+        println("${player.name} played ${card.name} - ${card.type} - HP: ${card.hp}")
+    }
 }

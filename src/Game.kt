@@ -1,5 +1,7 @@
 class Game {
 
+    val playedCards = mutableMapOf<Player, PokemonCard>()
+
     fun getTurnOrder(players: List<Player>, startingPlayer: Player): List<Player> {
         val startIndex = players.indexOf(startingPlayer)
         val playersFromStart = players.drop(startIndex)
@@ -42,6 +44,19 @@ class Game {
             // Removes card from the player's hand
             val chosenCard = player.hand.removeAt(cardIndex)
             return chosenCard
+        }
+    }
+
+    fun playTurn(turnOrder: List<Player>) {
+        // Make sure there are no cards in the list in the beginning of the trick
+        playedCards.clear()
+
+        for (player in turnOrder) {
+            // chose card
+            val chosenCard = chooseCard(player)
+
+            // store card
+            playedCards[player] = chosenCard
         }
     }
 }
