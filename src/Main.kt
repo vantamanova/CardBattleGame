@@ -1,3 +1,4 @@
+// Runs the main game setup, game loop, and final result
 fun main() {
     // create players
     val players = createPlayers(

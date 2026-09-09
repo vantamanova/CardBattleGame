@@ -1,7 +1,9 @@
 class Game {
 
+    // For storing cards currently in play
     val playedCards = mutableMapOf<Player, PokemonCard>()
 
+    // Creates the player order beginning with the selected starting player
     fun getTurnOrder(players: List<Player>, startingPlayer: Player): List<Player> {
         val startIndex = players.indexOf(startingPlayer)
         val playersFromStart = players.drop(startIndex)
@@ -11,6 +13,7 @@ class Game {
         return turnOrder
     }
 
+    // Displays all Pokemon cards currently in a player's hand
     fun displayHand(player: Player) {
         println("\n${player.name}'s hand:")
 
@@ -19,6 +22,7 @@ class Game {
         }
     }
 
+    // Gets and validates the player's card choice
     fun chooseCard(player: Player, leadType: String? = null): PokemonCard {
         displayHand(player)
 
@@ -57,6 +61,7 @@ class Game {
         }
     }
 
+    // Allows each player to play one card and stores the cards in play
     fun playTurn(turnOrder: List<Player>) {
         // Make sure there are no cards in the list in the beginning of the trick
         playedCards.clear()
@@ -83,6 +88,7 @@ class Game {
         }
     }
 
+    // Determines the winner of the current turn and updates their score
     fun determineTurnWinner(): Player {
         // first played card
         val firstCard = playedCards.values.first()
@@ -137,6 +143,7 @@ class Game {
         return winningPlayer
     }
 
+    // Checks whether one pokemon type is strong against another
     fun isStrongAgainst(attackingType: String, defendingType: String): Boolean {
         // compare types
         val strengths = mapOf(
@@ -158,6 +165,7 @@ class Game {
         return defendingType in (strengths[attackingType] ?: emptyList())
     }
 
+    // Finds the player or players with the highest final score
     fun determineGameWinner(players: List<Player>): List<Player> {
         // finds highest score among all
         val highestScore = players.maxOf { it.score }
@@ -169,6 +177,7 @@ class Game {
 
     }
 
+    // Displays the final winner or tied winners
     fun displayGameResult(winners: List<Player>) {
         // Only one winner
         if (winners.size == 1) {
@@ -185,6 +194,7 @@ class Game {
         }
     }
 
+    // Pauses the game until the user presses Enter
     fun waitForEnter() {
         print("\nPress Enter to continue...")
         readln()

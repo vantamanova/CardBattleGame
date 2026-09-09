@@ -9,6 +9,7 @@ class Player(
     ) {
 }
 
+// Creates players from a list of player names
 fun createPlayers(playerNames: List<String>): List<Player> {
     return playerNames.mapIndexed { index, name ->
         Player(
@@ -18,6 +19,7 @@ fun createPlayers(playerNames: List<String>): List<Player> {
     }
 }
 
+// Randomly chooses the player who starts the game
 fun chooseStartingPlayer(players: List<Player>): Player {
     return players.random()
 }
