@@ -19,8 +19,11 @@ class Game {
         }
     }
 
-    fun chooseCard(player: Player): PokemonCard {
+    fun chooseCard(player: Player, leadType: String? = null): PokemonCard {
         displayHand(player)
+
+        // Check if the player has leading type pokemon
+        val hasLeadType = leadType != null && player.hand.any { it.type == leadType }
 
         while (true) {
             print("Choose a card: ")
@@ -41,19 +44,32 @@ class Game {
                 continue
             }
 
+            // Check if the card is legal move
+            val selectedCard = player.hand[cardIndex]
+            if (hasLeadType && selectedCard.type != leadType) {
+                println("You must play a $leadType card.")
+                continue
+            }
+
             // Removes card from the player's hand
-            val chosenCard = player.hand.removeAt(cardIndex)
-            return chosenCard
+            player.hand.removeAt(cardIndex)
+            return selectedCard
         }
     }
 
     fun playTurn(turnOrder: List<Player>) {
         // Make sure there are no cards in the list in the beginning of the trick
         playedCards.clear()
+        var leadType: String? = null
 
         for (player in turnOrder) {
             // chose card
-            val chosenCard = chooseCard(player)
+            val chosenCard = chooseCard(player, leadType)
+
+            // First player can pick any card and establish the type
+            if (leadType == null) {
+                leadType = chosenCard.type
+            }
 
             // store card
             playedCards[player] = chosenCard
