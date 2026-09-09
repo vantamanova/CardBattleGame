@@ -74,6 +74,13 @@ class Game {
             // store card
             playedCards[player] = chosenCard
         }
+
+        // Display cards in play
+        println("\nCards in play:")
+
+        for ((player, card) in playedCards) {
+            println("${player.name}: ${card.name} - ${card.type} - HP: ${card.hp}")
+        }
     }
 
     fun determineTurnWinner(): Player {
@@ -176,5 +183,10 @@ class Game {
                 println("${winner.name} - ${winner.score} points")
             }
         }
+    }
+
+    fun waitForEnter() {
+        print("\nPress Enter to continue...")
+        readln()
     }
 }
