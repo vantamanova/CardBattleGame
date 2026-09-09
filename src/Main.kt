@@ -37,4 +37,10 @@ fun main() {
         // Next trick new order
         turnOrder = game.getTurnOrder(players, startingPlayer)
     }
+
+    // determine winner/winners
+    val gameWinners = game.determineGameWinner(players)
+
+    // display winner/winners
+    game.displayGameResult(gameWinners)
 }

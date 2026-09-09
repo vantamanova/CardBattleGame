@@ -150,4 +150,31 @@ class Game {
         // return T or F
         return defendingType in (strengths[attackingType] ?: emptyList())
     }
+
+    fun determineGameWinner(players: List<Player>): List<Player> {
+        // finds highest score among all
+        val highestScore = players.maxOf { it.score }
+
+        // finds the player/players with that score
+        val winners = players.filter { it.score == highestScore }
+
+        return winners
+
+    }
+
+    fun displayGameResult(winners: List<Player>) {
+        // Only one winner
+        if (winners.size == 1) {
+            val winner = winners[0]
+            println("\n${winner.name} wins the game with ${winner.score} points!")
+        }
+
+        // more winners
+        else {
+            println("\nIt's a tie!")
+            for (winner in winners) {
+                println("${winner.name} - ${winner.score} points")
+            }
+        }
+    }
 }
